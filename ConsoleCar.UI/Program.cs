@@ -15,6 +15,8 @@ namespace ConsoleCar.UI
             foreach (var car in carManager.GetAll())
             {
                 Console.WriteLine($"Car ID:{car.Id}" + " / " + $"Brand ID:{car.BrandId}" + " / " + $"Color ID:{car.ColorId}" + " / " + $"ModelYear:{car.ModelYear}" + " / " + $"Daily Price:{car.DailyPrice}" + " / " + $"Description:{car.Description}");
+
+                Console.WriteLine($"Car ID:{car.Id}" + " / " + $"Brand ID:{car.BrandId}" + " / " + $"Color ID:{car.ColorId}" + " / " + $"ModelYear:{car.ModelYear}" + " / " + $"Daily Price:{car.DailyPrice}" + " / " + $"Description:{car.Description}");
             }
 
 
