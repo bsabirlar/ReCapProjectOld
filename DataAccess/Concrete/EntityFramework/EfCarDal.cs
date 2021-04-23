@@ -1,5 +1,7 @@
-﻿using DataAccess.Abstract;
+﻿using Core.DataAccess.EntityFramework;
+using DataAccess.Abstract;
 using Entities.Concrete;
+using Entities.DTOs;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -9,7 +11,7 @@ using System.Text;
 
 namespace DataAccess.Concrete.EntityFramework
 {
-    public class EfCarDal : ICarDal
+    public class EfCarDal : EfEntityRepositoryBase<Car, CarReCapDbContext>, ICarDal
     {
         public void Add(Car entity)
         {
@@ -49,6 +51,26 @@ namespace DataAccess.Concrete.EntityFramework
                     ? context.Set<Car>().ToList()
                     : context.Set<Car>().Where(filter).ToList();
 
+            }
+        }
+
+        public List<CarDetailDto> GetCarDetails()
+        {
+            using (CarReCapDbContext context = new CarReCapDbContext())
+            {
+                var result = from p in context.Cars
+                             join c in context.Brands
+                             on p.BrandId equals c.BrandId
+                             join b in context.Colors
+                             on p.ColorId equals b.ColorId
+                             select new CarDetailDto
+                             {
+                                 BrandName = c.BrandName,
+                                 CarName = p.CarName,
+                                 Id = p.Id,
+                                 DailyPrice = p.DailyPrice
+                             };
+                return result.ToList();
             }
         }
 
